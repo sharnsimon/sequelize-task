@@ -23,7 +23,7 @@ module.exports=(sequelize,DataTypes)=>{
         }
     },
     {
-        tableName:'addressdetails',
+        tableName:'leavedetails',
         timestamps : true,
         paranoid : true,
         underscored : false,
