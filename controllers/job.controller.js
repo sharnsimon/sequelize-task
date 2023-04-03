@@ -1,4 +1,4 @@
-const { fn } = require('sequelize')
+const { fn,col } = require('sequelize')
 const {to,ReS,ReE} = require('../global_functions');
 const JobDetails = require('../models').jobdetails;
 require('../config/config');
@@ -19,3 +19,17 @@ const addJob = async function(req,res){
 }
 
 module.exports.addJob = addJob
+
+const getAverageSalary = async function(req,res){
+    let[errrr,datas] = await to(JobDetails.findAll({
+        attributes:[
+            [fn('AVG', col('salary')), 'averageSalary'],'departmentId'
+        ],
+        group: ['departmentId']
+    }))
+    console.log(datas)
+    if(errrr) return ReE(res,errr,422)
+    if(datas) return ReS(res,datas,200)
+}
+
+module.exports.getAverageSalary = getAverageSalary

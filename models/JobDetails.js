@@ -18,7 +18,7 @@ module.exports=(sequelize,DataTypes)=>{
             allowNull:false
         },
         doj:{
-            type:DataTypes.STRING,
+            type:DataTypes.DATE,
             allowNull:false
         },
         salary:{
