@@ -23,5 +23,9 @@ router.get('/getEmployeeJobDetails',employeeController.getEmployeeJobDetails)
 router.get('/getLeaveDetails',leaveController.getLeaveDetails)
 router.get('/getEmployeeBySalary',employeeController.getEmployeeBySalary)
 router.get('/getAverageSalary',jobController.getAverageSalary)
-
+router.get('/getActiveCount',jobController.getActiveCount)
 module.exports=router;
+
+//Update
+
+router.put('/updateJob',jobController.updateJob)

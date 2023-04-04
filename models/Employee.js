@@ -30,7 +30,7 @@ module.exports=(sequelize,DataTypes)=>{
     });
     Model.associate = function(models){
         this.addressdetails = this.hasMany(models.addressdetails)
-        this.jobdetails = this.hasOne(models.jobdetails)
+        this.jobdetails = this.hasMany(models.jobdetails)
         this.leavedetails= this.hasMany(models.leavedetails)
     }
 
