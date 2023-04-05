@@ -25,7 +25,6 @@ const getEmployeeJobDetails = async function(req,res){
     let [err,data] = await to(Employee.findAll({
         include:{
             model : JobDetails}
-            // where condition missing
     }
 
     ))
