@@ -27,6 +27,7 @@ const getLeaveDetails = async function(req,res){
         where:{
             employeeId : req.body.employeeId,
             startDate: {[Op.between]: ["2023-10-01", "2023-10-31"]}//chatGPT
+            //end date
         }
     }))
     console.log(data)

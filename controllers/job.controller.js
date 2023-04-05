@@ -41,7 +41,7 @@ module.exports.getAverageSalary = getAverageSalary
 
 const getActiveCount = async function(req,res){
 
-    let[errAct,dat]= await to(JobDetails.findAll(
+    let[errAct,active]= await to(JobDetails.findAll(
         {
             attributes:['departmentId',
                         [fn('COUNT',col('*')),'count'],'isActive'],
@@ -58,7 +58,7 @@ const getActiveCount = async function(req,res){
     ))
     if(errAct) return ReE(res,errAct,422)
     
-    let[errAct1,datae]= await to(JobDetails.findAll(
+    let[errAct1,inActive]= await to(JobDetails.findAll(
         {
             attributes:['departmentId',
                         [fn('COUNT',col('*')),'count'],'isActive'],
@@ -73,9 +73,9 @@ const getActiveCount = async function(req,res){
         } 
         
     ))
-    console.log(datae)
+    console.log(inActive)
     if(errAct1) return ReE(res,errAct1,422)
-    if(datae&&dat) return ReS(res,{datae,dat},200)
+    if(active&&inActive) return ReS(res,{active,inActive},200)
     // if(dat) return ReS(res,dat,200)
 }
 
