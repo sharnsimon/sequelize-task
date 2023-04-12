@@ -49,9 +49,9 @@ module.exports=(sequelize,DataTypes)=>{
     })
     Model.prototype.getJWT = async function(){
         let err, encryptedToken;
-        const token = "Bearer" + jwt.sign({
+        const token = "Bearer " + jwt.sign({
             id : this.id,
-            email : this.email
+            email : this.Email
             }, CONFIG.jwt_encryption, {expiresIn : CONFIG.jwt_expiration});
             [err,encryptedToken] = await to(cryptoService.encrypt(token));
             if(err) TE(err);

@@ -24,5 +24,13 @@ const login = async function(req,res){
     }));
     if (err) return ReE(res,err,422);
     console.log('user Password',user);
-    [err,token] = await to(user.getJWT)
+    [err,token] = await to(user.getJWT())
+    if(err) return ReE(res,err,422);
+    if(user && token){
+        employeeDetails['user'] =user;
+        employeeDetails['token'] = token;
+    }
+    if(employeeDetails) return ReS(res,employeeDetails,200);
 }
+
+module.exports.login = login;

@@ -10,8 +10,11 @@ const encrypt = async function(plaintext){
 
  const decrypt = async function(ciphertext){
     let plaintext;
+    console.log('check56',CONFIG);
     const bytes= cryptoJS.AES.decrypt(ciphertext.toString(),CONFIG.secretKey)
-    plaintext = bytes.toString(CryptoJS.enc.Utf8)
+  
+    plaintext = bytes.toString(cryptoJS.enc.Utf8);
+    console.log('plain text',plaintext);
     return plaintext;
  };
 

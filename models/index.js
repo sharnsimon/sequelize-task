@@ -4,6 +4,7 @@ const Sequelize = require('sequelize');
 var basename = path.basename(__filename);
 require('../config/config');
 const db = {};
+
 //database name, user, password
 const sequelize = new Sequelize(CONFIG.db_name, CONFIG.db_user, CONFIG.db_password, {
   //'mysql', 'sqlite', 'postgres', 'mssql'
@@ -37,7 +38,7 @@ fs
     }
   });
 
-  db.sequelize = sequelize;
+db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 module.exports = db;

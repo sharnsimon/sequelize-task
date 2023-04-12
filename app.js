@@ -3,8 +3,12 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var passport = require('passport')
 var bodyParser = require('body-parser')
 require('./config/config')
+
+const {to} = require('./global_functions');
+const cryptoService = require('./services/crypto.service');
 
 var indexRouter = require('./routes/router');
 // var usersRouter = require('./routes/users');
@@ -24,9 +28,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json({limit:"200mb"}))
 app.use(bodyParser.urlencoded({extended: true,limit:'200mb'}))
 
-app.use('/', indexRouter);
 // app.use('/users', usersRouter);
-
+app.use(passport.initialize());
+app.use(async function (req,res,next){
+  console.log('check34',req.headers.authorization);
+  if(req && req.headers && req.headers.authorization){
+    [err,data] = await to(cryptoService.decrypt(req.headers.authorization));
+    req.headers.authorization =  data;
+  }
+  res.setHeader('Access-Control-Allow-Origin','*');
+  res.setHeader('Access-Controll-Allow-Methods','GET,POST,PUT,PATCH,OPTIONS,DELETE');
+  res.setHeader('Access-Controll-Allow-Headers','X-Requested-With,content-type,Authorization,Content-Type');
+  res.setHeader('Access-Controll-Allow-Credentials',true);
+  next();
+});
 
 //SEQUELIZE CONNECTION
 
@@ -37,6 +52,9 @@ models.sequelize.authenticate().then(()=>{
   console.log("Connection refused",err.message)
 })
 models.sequelize.sync({alter:true});
+
+app.use('/', indexRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -53,5 +71,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+//passport middleware
+
+
 
 module.exports = app;

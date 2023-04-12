@@ -1,5 +1,6 @@
 var express = require('express')
 var router = express.Router();
+var passport = require('passport')
 
 //Controllers----------------
 
@@ -8,7 +9,9 @@ let departmentController = require('../controllers/department.controller')
 let employeeController = require('../controllers/employee.controller')
 let jobController = require('../controllers/job.controller')
 let leaveController = require('../controllers/leavedetails.controller');
-let empLoginController = require('../controllers/employeeLogin.controller')
+let empLoginController = require('../controllers/employeeLogin.controller');
+require('../middleware/passport')(passport);
+// const passport = require('../middleware/passport');
 
 //ROUTE TO INSERT VALUES
 
@@ -28,6 +31,12 @@ router.get('/getAverageSalary',jobController.getAverageSalary)
 router.get('/getActiveCount',jobController.getActiveCount)
 router.put('/updateJob',jobController.updateJob)
 router.get('/deleteDepartment/:id',departmentController.deleteDepartment)
+router.get('/login',empLoginController.login)
+router.get('/check',passport.authenticate('jwt',{ session:false }),
+    function(req,res,next){
+        console.log('check123',req.user);
+    res.send('done ' + req.user.email)
+    })
 module.exports=router;
 
 //Update
