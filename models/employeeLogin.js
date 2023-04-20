@@ -57,8 +57,6 @@ module.exports=(sequelize,DataTypes)=>{
             if(err) TE(err);
             return encryptedToken;
 
-    };
-
-
+    };    
     return Model;
 }

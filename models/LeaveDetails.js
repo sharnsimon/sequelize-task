@@ -1,5 +1,5 @@
 module.exports=(sequelize,DataTypes)=>{
-    const Model= sequelize.define('leavedetails',{
+    const Model= sequelize.define('leavedetails',{  //this table name will be stored in plural form
         id:{
             type:DataTypes.INTEGER,
             primaryKey:true,
@@ -15,7 +15,7 @@ module.exports=(sequelize,DataTypes)=>{
         },
         endDate:{
             type:DataTypes.DATE,
-            allowNull:false
+            allowNull:false 
         },
         reason:{
             type:DataTypes.STRING,
@@ -23,7 +23,7 @@ module.exports=(sequelize,DataTypes)=>{
         }
     },
     {
-        tableName:'leavedetails',
+        tableName:'leavedetails', //the table name which is stored in plural form can be modified here
         timestamps : true,
         paranoid : true,
         underscored : false,

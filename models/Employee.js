@@ -17,6 +17,9 @@ module.exports=(sequelize,DataTypes)=>{
             type:DataTypes.STRING,
             allowNull:false
         },
+        salaryDetails:{
+            type:DataTypes.JSON
+        },
         isActive:{
             type:DataTypes.BOOLEAN,
             defaultValue:true

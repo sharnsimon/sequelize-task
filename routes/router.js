@@ -10,6 +10,9 @@ let employeeController = require('../controllers/employee.controller')
 let jobController = require('../controllers/job.controller')
 let leaveController = require('../controllers/leavedetails.controller');
 let empLoginController = require('../controllers/employeeLogin.controller');
+let mailController = require('../controllers/mail.controller')
+let jsonDetails = require('../controllers/jsonDetails.controller');
+const { json } = require('sequelize');
 require('../middleware/passport')(passport);
 // const passport = require('../middleware/passport');
 
@@ -21,9 +24,10 @@ router.post('/addEmployee',employeeController.addEmployee);
 router.post('/addJob',jobController.addJob);
 router.post('/addleave',leaveController.addLeave);
 router.post('/addEmployeeLogin',empLoginController.addEmployeeLogin)
+router.post('/addDetails',jsonDetails.addDetails)
 
 //ROUTE TO GET INFORMATION
-
+router.get('/createSignup',mailController.createSignup)
 router.get('/getEmployeeJobDetails',employeeController.getEmployeeJobDetails)
 router.get('/getLeaveDetails',leaveController.getLeaveDetails)
 router.get('/getEmployeeBySalary',employeeController.getEmployeeBySalary)

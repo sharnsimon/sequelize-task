@@ -1,4 +1,4 @@
-const { fn } = require('sequelize')
+const { fn } = require('sequelize') 
 const {to,ReS,ReE} = require('../global_functions');
 const Employee = require('../models').employee;
 const JobDetails = require('../models').jobdetails;
@@ -11,7 +11,9 @@ const addEmployee = async function(req,res){
         {
             firstName:req.body.firstName,
             lastName:req.body.lastName,
-            dob:req.body.dob
+            dob:req.body.dob,
+            salaryDetails:req.body.salaryDetails
+            
         }
     ))
     console.log('Employee Details',employee);
@@ -63,3 +65,29 @@ const getEmployeeBySalary = async function(req,res){
 }
 module.exports.getEmployeeBySalary = getEmployeeBySalary
 
+
+const netPay = async function(req,res){
+    let[errSal,salary] = await to(Employee.findAll({
+        attributes:['id','firstName','salaryDetails']
+    }));
+    if(errSal) return ReE(res,err,422)
+    if(salary && salary.length){
+        
+        let netSalary = salary.map(emp =>{
+            let sal = emp.salaryDetails;
+            let PF = sal.PF?sal.PF:0;
+            let PT = sal.PT?sal.PT:0;
+            let ESI = sal.ESI?sal.ESI:0;
+            let cess=sal.cess?sal.cess:0;
+            let basic=sal.basic?sal.basic:0;
+            let HRA=sal.HRA?sal.HRA:0;
+            let incomeTax=sal.incomeTax?sal.incomeTax:0;
+            let specialAllowance=sal.specialAllowance?sal.specialAllowance:0;
+            let netSal = ((basic+HRA+specialAllowance)-(PF+PT+ESI)-(incomeTax+cess))
+            return {emp,netSal};
+        })
+        if(netSalary) return ReS(res,netSalary,200)
+        
+    }
+}
+module.exports.netPay=netPay;
